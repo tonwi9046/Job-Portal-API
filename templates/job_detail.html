@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Details - Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="job-detail">
+
+    <h1>{{ job.title }}</h1>
+
+    <p>
+        <strong>Company:</strong>
+        {{ job.company.name }}
+    </p>
+
+    <p>
+        <strong>Category:</strong>
+        {{ job.category.name }}
+    </p>
+
+    <p>
+        <strong>Location:</strong>
+        {{ job.location }}
+    </p>
+
+    <p>
+        <strong>Salary:</strong>
+        {{ job.salary }}
+    </p>
+
+    <p>
+        <strong>Job Type:</strong>
+        {{ job.job_type }}
+    </p>
+
+    <h3>Description</h3>
+
+    <p>
+        {{ job.description }}
+    </p>
+
+    <a href="/apply/{{ job.id }}/" class="btn">
+        Apply Now
+    </a>
+
+</div>
+
+{% endblock %}

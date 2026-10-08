@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+    color: #333;
+}
+
+
+/* Navbar */
+
+.navbar {
+    background: #222;
+    padding: 15px 50px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* Main container */
+
+.container {
+    min-height: 80vh;
+    padding: 40px;
+}
+
+
+/* Hero section */
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+
+/* Button */
+
+.btn {
+    display: inline-block;
+    background: #222;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #444;
+}
+
+
+/* Welcome section */
+
+.welcome {
+    background: white;
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.welcome h2 {
+    margin-bottom: 10px;
+}
+
+
+/* Footer */
+
+.footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+/* Form */
+
+.form-box {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-box label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.form-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-box .btn {
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+}

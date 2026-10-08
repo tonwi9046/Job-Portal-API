@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}My Applications - Job Portal{% endblock %}
+
+{% block content %}
+
+<h1>My Applications</h1>
+
+<div class="job-list">
+
+    {% for application in applications %}
+
+    <div class="job-card">
+
+        <h2>{{ application.job.title }}</h2>
+
+        <p>
+            <strong>Company:</strong>
+            {{ application.job.company.name }}
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            {{ application.job.location }}
+        </p>
+
+        <p>
+            <strong>Applied Date:</strong>
+            {{ application.applied_at }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ application.status }}
+        </p>
+
+    </div>
+
+    {% empty %}
+
+    <p>You have not applied for any job yet.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
