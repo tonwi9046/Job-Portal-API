@@ -40,12 +40,7 @@ def jobs_page(request):
     return render(request, 'jobs.html', {
         'jobs': jobs
     })
-def jobs_page(request):
-    jobs = Job.objects.all().order_by('-created_at')
 
-    return render(request, 'jobs.html', {
-        'jobs': jobs
-    })
 def job_detail_page(request, pk):
 
     job = Job.objects.get(id=pk)
