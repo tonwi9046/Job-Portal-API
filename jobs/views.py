@@ -75,9 +75,7 @@ class ApplicationListCreateView(generics.ListCreateAPIView):
 
 
 
-
-
-class ApplicationDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ApplicationDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated]
 
@@ -88,9 +86,6 @@ class ApplicationDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Application.objects.all()
 
         return Application.objects.filter(applicant=user)
-
-    def perform_update(self, serializer):
-        serializer.save(applicant=self.request.user)
 
 
 def jobs_page(request):
