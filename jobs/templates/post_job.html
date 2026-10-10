@@ -1,53 +1,108 @@
 
 {% extends 'base.html' %}
 
-{% block title %}Post a Job{% endblock %}
+{% block title %}Post a Job | Job Portal{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Post a New Job</h1>
+<div class="post-job-page">
+    <div class="post-job-header">
+        <span class="post-job-tag">EMPLOYER PORTAL</span>
+        <h1>Post a New Job</h1>
+        <p>Find the right talent for your team. Share your job opening below.</p>
+    </div>
 
-    <form method="POST">
-        {% csrf_token %}
+    <div class="post-job-card">
+        <form method="POST">
+            {% csrf_token %}
 
-        <label for="title">Job Title</label>
-        <input type="text" id="title" name="title" required>
+            <div class="job-form-grid">
+                <div class="job-form-group">
+                    <label for="title">Job Title <span>*</span></label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="e.g. Junior Python Developer"
+                        required
+                    >
+                </div>
 
-        <label for="company">Company</label>
-        <select id="company" name="company" required>
-            {% for company in companies %}
-                <option value="{{ company.id }}">
-                    {{ company.name }}
-                </option>
-            {% endfor %}
-        </select>
+                <div class="job-form-group">
+                    <label for="company">Company <span>*</span></label>
+                    <select id="company" name="company" required>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}">
+                                {{ company.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
-            {% for category in categories %}
-                <option value="{{ category.id }}">
-                    {{ category.name }}
-                </option>
-            {% endfor %}
-        </select>
+                <div class="job-form-group">
+                    <label for="category">Job Category <span>*</span></label>
+                    <select id="category" name="category" required>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-        <label for="location">Location</label>
-        <input type="text" id="location" name="location" required>
+                <div class="job-form-group">
+                    <label for="location">Job Location <span>*</span></label>
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="e.g. Dhaka, Bangladesh"
+                        required
+                    >
+                </div>
 
-        <label for="salary">Salary</label>
-        <input type="text" id="salary" name="salary">
+                <div class="job-form-group">
+                    <label for="salary">Salary</label>
+                    <input
+                        type="text"
+                        id="salary"
+                        name="salary"
+                        placeholder="e.g. 25000 - 35000 BDT"
+                    >
+                    <small>Enter the expected salary or salary range.</small>
+                </div>
 
-        <label for="job_type">Job Type</label>
-        <select id="job_type" name="job_type" required>
-            <option value="Full Time">Full Time</option>
-            <option value="Part Time">Part Time</option>
-            <option value="Internship">Internship</option>
-        </select>
+                <div class="job-form-group">
+                    <label for="job_type">Employment Type <span>*</span></label>
+                    <select id="job_type" name="job_type" required>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
 
-        <label for="description">Job Description</label>
-        <textarea id="description" name="description" rows="5" required></textarea>
+                <div class="job-form-group job-description-group">
+                    <label for="description">Job Description <span>*</span></label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="6"
+                        placeholder="Describe the responsibilities, required skills, qualifications, and experience..."
+                        required
+                    ></textarea>
+                </div>
+            </div>
 
-        <button type="submit">Post Job</button>
-    </form>
+            <div class="job-form-footer">
+                <p><span>*</span> Required fields</p>
+                <button type="submit" class="post-job-btn">
+                    Post Job <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <p class="post-job-note">
+        Please review the job details before publishing your opening.
+    </p>
 </div>
 {% endblock %}
