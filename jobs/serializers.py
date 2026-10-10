@@ -43,4 +43,4 @@ class ApplicationSerializer(serializers.ModelSerializer):
             'status',
             'applied_at'
         ]
-        read_only_fields = ['status', 'applied_at']
+        read_only_fields = ['applicant', 'status', 'applied_at']
