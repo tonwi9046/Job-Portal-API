@@ -3,6 +3,9 @@ from .models import Company, Category, Job, Application
 from .serializers import CompanySerializer, CategorySerializer, JobSerializer, ApplicationSerializer
 from django.shortcuts import render , redirect
 from .models import Job
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
 
 
 class CompanyListCreateView(generics.ListCreateAPIView):
@@ -85,3 +88,136 @@ def my_applications_page(request):
     return render(request, 'my_applications.html', {
         'applications': applications
     })
+
+@login_required
+def employer_dashboard(request):
+    jobs = Job.objects.filter(
+        posted_by=request.user
+    ).order_by('-created_at')
+
+    return render(request, 'employer_dashboard.html', {
+        'jobs': jobs,
+    })
+
+
+@login_required
+def post_job_page(request):
+    companies = Company.objects.all()
+    categories = Category.objects.all()
+
+    if request.method == 'POST':
+        company = get_object_or_404(
+            Company, pk=request.POST.get('company')
+        )
+        category = get_object_or_404(
+            Category, pk=request.POST.get('category')
+        )
+
+        Job.objects.create(
+            title=request.POST.get('title', '').strip(),
+            company=company,
+            category=category,
+            location=request.POST.get('location', '').strip(),
+            salary=request.POST.get('salary', '').strip(),
+            job_type=request.POST.get('job_type'),
+            description=request.POST.get('description', '').strip(),
+            posted_by=request.user,
+        )
+
+        return redirect('employer-my-jobs')
+
+    return render(request, 'post_job.html', {
+        'companies': companies,
+        'categories': categories,
+    })
+
+
+@login_required
+def employer_my_jobs(request):
+    jobs = Job.objects.filter(
+        posted_by=request.user
+    ).order_by('-created_at')
+
+    return render(request, 'my_jobs.html', {
+        'jobs': jobs,
+    })
+
+
+@login_required
+def edit_job_page(request, pk):
+    job = get_object_or_404(
+        Job, pk=pk, posted_by=request.user
+    )
+    companies = Company.objects.all()
+    categories = Category.objects.all()
+
+    if request.method == 'POST':
+        job.title = request.POST.get('title', '').strip()
+        job.company = get_object_or_404(
+            Company, pk=request.POST.get('company')
+        )
+        job.category = get_object_or_404(
+            Category, pk=request.POST.get('category')
+        )
+        job.location = request.POST.get('location', '').strip()
+        job.salary = request.POST.get('salary', '').strip()
+        job.job_type = request.POST.get('job_type')
+        job.description = request.POST.get('description', '').strip()
+        job.save()
+
+        return redirect('employer-my-jobs')
+
+    return render(request, 'edit_job.html', {
+        'job': job,
+        'companies': companies,
+        'categories': categories,
+    })
+
+
+@login_required
+@require_POST
+def delete_job_page(request, pk):
+    job = get_object_or_404(
+        Job, pk=pk, posted_by=request.user
+    )
+    job.delete()
+    return redirect('employer-my-jobs')
+
+
+@login_required
+def employer_applicants(request, pk):
+    job = get_object_or_404(
+        Job, pk=pk, posted_by=request.user
+    )
+    applications = job.applications.select_related(
+        'applicant'
+    ).order_by('-applied_at')
+
+    return render(request, 'applicants.html', {
+        'job': job,
+        'applications': applications,
+    })
+
+
+@login_required
+@require_POST
+def update_application_status(request, pk, status):
+    application = get_object_or_404(
+        Application,
+        pk=pk,
+        job__posted_by=request.user,
+    )
+
+    if status not in ('Accepted', 'Rejected'):
+        return redirect(
+            'employer-applicants',
+            pk=application.job.pk,
+        )
+
+    application.status = status
+    application.save(update_fields=['status'])
+
+    return redirect(
+        'employer-applicants',
+        pk=application.job.pk,
+    )

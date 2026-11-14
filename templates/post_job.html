@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Post a Job{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Post a New Job</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="title">Job Title</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="company">Company</label>
+        <select id="company" name="company" required>
+            {% for company in companies %}
+                <option value="{{ company.id }}">
+                    {{ company.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+            {% for category in categories %}
+                <option value="{{ category.id }}">
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="salary">Salary</label>
+        <input type="text" id="salary" name="salary">
+
+        <label for="job_type">Job Type</label>
+        <select id="job_type" name="job_type" required>
+            <option value="Full Time">Full Time</option>
+            <option value="Part Time">Part Time</option>
+            <option value="Internship">Internship</option>
+        </select>
+
+        <label for="description">Job Description</label>
+        <textarea id="description" name="description" rows="5" required></textarea>
+
+        <button type="submit">Post Job</button>
+    </form>
+</div>
+{% endblock %}

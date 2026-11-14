@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 1100px; margin: 40px auto; padding: 20px;">
+
+    <h1>Employer Dashboard</h1>
+    <p>Welcome, {{ request.user.username }}!</p>
+    <p>Manage your job postings and applicants from here.</p>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 25px 0;">
+        <a href="{% url 'employer-post-job' %}"
+           style="background: #2563eb; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none;">
+            + Post a Job
+        </a>
+
+        <a href="{% url 'employer-my-jobs' %}"
+           style="background: #15803d; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none;">
+            My Jobs
+        </a>
+    </div>
+
+    <h2>My Recent Job Posts</h2>
+
+    {% if jobs %}
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <thead>
+                    <tr style="background: #f1f5f9; text-align: left;">
+                        <th style="padding: 12px;">Job Title</th>
+                        <th style="padding: 12px;">Company</th>
+                        <th style="padding: 12px;">Location</th>
+                        <th style="padding: 12px;">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                {{ job.title }}
+                            </td>
+
+                            <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                {{ job.company.name }}
+                            </td>
+
+                            <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                {{ job.location }}
+                            </td>
+
+                            <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                <a href="{% url 'employer-edit-job' job.pk %}">Edit</a>
+                                |
+                                <a href="{% url 'employer-applicants' job.pk %}">Applicants</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>You have not posted any jobs yet.</p>
+        <p>Click "Post a Job" to create your first job posting.</p>
+    {% endif %}
+
+</div>
+{% endblock %}
